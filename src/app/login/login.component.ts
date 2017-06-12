@@ -24,7 +24,8 @@ export class LoginComponent implements OnInit {
   login = () => {
     this.loading = true;
     this.apiService.login(this.username, this.password).then((response) => {
-      localStorage.setItem('token', 'Bearer: ' + response.jwt);
+      console.log(response);
+      localStorage.setItem('token', 'Bearer ' + response.jwt);
       this.router.navigate(['/dashboard']);
     }).catch((error) => {
       this.loading = false;

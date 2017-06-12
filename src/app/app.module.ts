@@ -1,4 +1,4 @@
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AuthGuard } from './auth.guard';
 import { RouterModule } from '@angular/router';
@@ -12,19 +12,24 @@ import {ApiService} from './services/api.service';
 
 import {routes} from './app.routes';
 import { TasksComponent } from './dashboard/tasks/tasks.component';
+import { ProfileComponent } from './dashboard/profile/profile.component';
+import { RegisterComponent } from './login/register/register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    TasksComponent
+    TasksComponent,
+    ProfileComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
     HttpModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [AuthGuard, ApiService],
   bootstrap: [AppComponent]

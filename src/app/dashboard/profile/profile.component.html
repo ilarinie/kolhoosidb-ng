@@ -1,0 +1,61 @@
+<div class="user-display">
+  <pre>{{ user | json }}</pre>
+
+  <!--<table>
+    <tbody>
+    <tr><td><b>USERNAME: </b></td><td> {{user.id}}</td></tr>
+    <tr><td><b>USERNAME: </b></td><td> {{user.username}}</td></tr>
+    <tr><td><b>DISPLAY NAME: </b></td><td> {{user.name}}</td></tr>
+    <tr><td><b>EMAIL: </b></td><td> {{user.email}}</td></tr>
+    <tr><td><b>CREATED AT: </b></td><td> {{user.created_at | date:'short'}}</td></tr>
+    <tr><td><b>UPDATED AT: </b></td><td> {{user.updated_at | date:'short'}}</td></tr>
+    </tbody>
+  </table> -->
+</div>
+<div>
+  <div  class="user-form">
+    <form [formGroup]="infoForm" (ngSubmit)="updateUser()">
+      <div class="field">
+        <label>Name</label><br/>
+        <input  [formControlName]="'name'" type="text"   [(ngModel)]="user.name"/>
+        <div *ngIf="infoForm.controls.name.errors && infoForm.controls.name.touched">
+          <p *ngIf="infoForm.controls.name.errors.minlength">
+            Name too must be over {{infoForm.controls.name.errors.minlength.requiredLength}} letters
+          </p>
+          <p *ngIf="infoForm.controls.name.errors.required">
+            Name is required.
+          </p>
+        </div>
+      </div>
+      <div class="field">
+        <label>Email</label><br />
+        <input [formControlName]="'email'" type="email" name="email" [(ngModel)]="user.email" />
+        <div *ngIf="infoForm.controls.email.errors && infoForm.controls.email.touched">
+          <p *ngIf="infoForm.controls.email.errors.required">
+            Email is required.
+          </p>
+        </div>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <div class="password-form">
+    <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()">
+      <div class="field">
+        <label>Password</label><br />
+        <input type="password" formControlName="password" name="password" [(ngModel)]="user.password" />
+      </div>
+      <div class="field">
+        <label>Password Confirmation</label><br/>
+        <input type="password" formControlName="password_confirmation" name="password_confirmation" [(ngModel)]="user.password_confirmation" />
+        <p *ngIf="passwordForm.controls.errors">
+
+        </p>
+      </div>
+      <button type="submit">Submit</button>
+
+    </form>
+  </div>
+
+</div>
+
