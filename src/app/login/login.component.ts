@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
   loading: boolean = false;
+  errorText: string;
 
   constructor(private apiService: ApiService, private router: Router) { }
 
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
   }
 
   login = () => {
+    this.errorText = null;
     this.loading = true;
     this.apiService.login(this.username, this.password).then((response) => {
       console.log(response);
@@ -29,7 +31,13 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/dashboard']);
     }).catch((error) => {
       this.loading = false;
-      console.log('loginissa: ' + error);
+      console.log(error);
+      console.log(typeof(error));
+      if (error.status === 404){
+        this.errorText = "Login failed, wrong username or password entered."
+      } else {
+        this.errorText = error;
+      }
     })
   }
 

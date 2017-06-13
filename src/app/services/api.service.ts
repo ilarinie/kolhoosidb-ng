@@ -8,8 +8,8 @@ import {User} from '../models/user';
 @Injectable()
 export class ApiService {
 
-  // apiUrl = 'https://kolhoosidb-api.herokuapp.com';
-  apiUrl = 'http://localhost:3000';
+  apiUrl = 'https://kolhoosidb-api.herokuapp.com';
+  // apiUrl = 'http://localhost:3000';
   current_user: User;
 
   userSub: Subject<User> = new Subject<User>();
@@ -82,7 +82,8 @@ export class ApiService {
   }
 
   changeUserPassword = (password: string, password_confirmation: string) => {
-    return this.http.put(this.apiUrl + '/change_password', {password: password, password_confirmation: password}, {headers: this.getHeader()})
+    return this.http
+      .put(this.apiUrl + '/change_password', {password: password, password_confirmation: password}, {headers: this.getHeader()})
       .toPromise()
       .then((response) => response.json())
       .catch(this.handleError)
@@ -90,7 +91,7 @@ export class ApiService {
 
 
   handleError = (error: any): Promise<any> => {
-    console.error('An error occurred', error);
+    // console.error('An error occurred', error);
     return Promise.reject(error.message || error);
   }
 

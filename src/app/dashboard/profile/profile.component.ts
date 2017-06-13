@@ -59,7 +59,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
 
   updateUser = () => {
-    console.log(this.infoForm.controls.name.errors.minlength)
     if (this.infoForm.valid) {
       this.apiService.putUser(this.user).then((response) => {
         this.apiService.getCurrentUser();

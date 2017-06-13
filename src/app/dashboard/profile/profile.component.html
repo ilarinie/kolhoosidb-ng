@@ -1,5 +1,8 @@
 <div class="user-display">
   <pre>{{ user | json }}</pre>
+  <p *ngIf="infoForm.dirty">
+    Not saved!
+  </p>
 
   <!--<table>
     <tbody>
@@ -14,13 +17,14 @@
 </div>
 <div>
   <div  class="user-form">
+    <h2>Update your info</h2>
     <form [formGroup]="infoForm" (ngSubmit)="updateUser()">
       <div class="field">
         <label>Name</label><br/>
         <input  [formControlName]="'name'" type="text"   [(ngModel)]="user.name"/>
         <div *ngIf="infoForm.controls.name.errors && infoForm.controls.name.touched">
           <p *ngIf="infoForm.controls.name.errors.minlength">
-            Name too must be over {{infoForm.controls.name.errors.minlength.requiredLength}} letters
+            Name must be over {{infoForm.controls.name.errors.minlength.requiredLength}} letters
           </p>
           <p *ngIf="infoForm.controls.name.errors.required">
             Name is required.
@@ -40,6 +44,7 @@
     </form>
   </div>
   <div class="password-form">
+    <h2>Change your password</h2>
     <form [formGroup]="passwordForm" (ngSubmit)="updatePassword()">
       <div class="field">
         <label>Password</label><br />

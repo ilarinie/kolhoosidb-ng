@@ -1,45 +1,63 @@
-<div  class="user-form">
+<div class="user-form">
   <h1>Register a new user</h1>
   <form [formGroup]="form" (ngSubmit)="createUser()">
     <div class="field">
       <label>Username</label><br/>
-      <input  [formControlName]="'username'" type="text" />
-      <div *ngIf="form.controls.username.errors && form.controls.username.touched">
+      <input [ngClass]="{'textfield-error':((form.controls.username.errors && form.controls.username.touched) || (usernameErrors.length !== 0))}" [formControlName]="'username'" type="text" />
+      <div class="error-div client-errors" *ngIf="form.controls.username.errors && form.controls.username.touched">
         <p *ngIf="form.controls.username.errors.minlength">
-          Username too must be over {{form.controls.username.errors.minlength.requiredLength}} letters
+          Username must be over {{form.controls.username.errors.minlength.requiredLength}} letters
         </p>
         <p *ngIf="form.controls.username.errors.required">
           Username is required.
         </p>
       </div>
+      <div class="server-errors error-div" *ngIf="usernameErrors.length !== 0">
+        <ul>
+          <li *ngFor="let error of usernameErrors">{{error}}</li>
+        </ul>
+      </div>
     </div>
     <div class="field">
       <label>Name</label><br/>
-      <input  [formControlName]="'name'" type="text" />
-      <div *ngIf="form.controls.name.errors && form.controls.name.touched">
+      <input [ngClass]="{'textfield-error':((form.controls.name.errors && form.controls.name.touched) || (nameErrors.length !== 0))}" [formControlName]="'name'" type="text" />
+      <div class="error-div client-errors" *ngIf="form.controls.name.errors && form.controls.name.touched">
         <p *ngIf="form.controls.name.errors.minlength">
-          Name too must be over {{form.controls.name.errors.minlength.requiredLength}} letters
+          Name must be over {{form.controls.name.errors.minlength.requiredLength}} letters
         </p>
         <p *ngIf="form.controls.name.errors.required">
           Name is required.
         </p>
       </div>
+      <div class="server-errors error-div" *ngIf="nameErrors.length !== 0">
+        <ul>
+          <li *ngFor="let error of nameErrors">{{error}}</li>
+        </ul>
+      </div>
     </div>
     <div class="field">
       <label>Email</label><br />
-      <input [formControlName]="'email'" type="email" name="email"  />
-      <div *ngIf="form.controls.email.errors && form.controls.email.touched">
+      <input [ngClass]="{'textfield-error':((form.controls.email.errors && form.controls.email.touched) || (emailErrors.length !== 0))}" [formControlName]="'email'" type="email" name="email" />
+      <div class="error-div client-errors" *ngIf="form.controls.email.errors && form.controls.email.touched">
         <p *ngIf="form.controls.email.errors.required">
           Email is required.
         </p>
+        <p *ngIf="form.controls.email.errors.server">
+          {{form.controls.email.errors.server}}
+        </p>
+        <div class="server-errors error-div" *ngIf="emailErrors.length !== 0">
+          <ul>
+            <li *ngFor="let error of emailErrors">{{error}}</li>
+          </ul>
+        </div>
       </div>
     </div>
     <div class="field">
       <label>Password</label><br />
-      <input type="password" [formControlName]="'password'" name="password"/>
-      <div *ngIf="form.controls.password.errors && form.controls.password.touched">
+      <input [ngClass]="{'textfield-error':((form.controls.password.errors && form.controls.password.touched) || (passwordErrors.length !== 0))}" type="password" [formControlName]="'password'" name="password" />
+      <div class="error-div client-errors" *ngIf="form.controls.password.errors && form.controls.password.touched">
         <p *ngIf="form.controls.password.errors.minlength">
-          Password too must be over {{form.controls.password.errors.minlength.requiredLength}} letters
+          Password must be over {{form.controls.password.errors.minlength.requiredLength}} letters
         </p>
         <p *ngIf="form.controls.password.errors.maxLength">
           Password cant be over {{form.controls.password.errors.maxLength.maxLength}} letters
@@ -48,17 +66,26 @@
           Password is required.
         </p>
       </div>
+      <div *ngIf="passwordErrors.length !== 0">
+        <ul>
+          <li *ngFor="let error of passwordErrors">{{error}}</li>
+        </ul>
+      </div>
     </div>
     <div class="field">
       <label>Password Confirmation</label><br/>
-      <input type="password" [formControlName]="'password_confirmation'" name="password_confirmation" />
-      <div *ngIf="form.controls.password_confirmation.errors && form.controls.password_confirmation.touched">
+      <input [ngClass]="{'textfield-error':((form.controls.password_confirmation.errors && form.controls.password_confirmation.touched) || (passwordErrors.length !== 0))}" type="password" [formControlName]="'password_confirmation'" name="password_confirmation" />
+      <div class="error-div client-errors" *ngIf="form.controls.password_confirmation.errors && form.controls.password_confirmation.touched">
         <p *ngIf="form.controls.password_confirmation.errors.required">
           Password confirmation is required.
         </p>
       </div>
     </div>
-    <button type="submit">Submit</button>
-
+    <div class="field submit-button-div">
+          <button type="submit">Submit</button>
+    </div>
+    <div *ngIf="loading">
+      Loading...
+    </div>
   </form>
 </div>
