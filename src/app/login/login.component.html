@@ -1,14 +1,16 @@
 <h1>Log in</h1>
 <div class="login-field">
-      <label>username</label><br />
-      <input type="text" [(ngModel)]="username" placeholder="username" />
+      <md-input-container>
+            <input mdInput type="text" [(ngModel)]="username" placeholder="Username" />
+      </md-input-container>
 </div>
 <div class="login-field">
-      <label>password</label><br />
-      <input type="password" [(ngModel)]="password" placeholder="password" />
+      <md-input-container>
+            <input mdInput type="password" [(ngModel)]="password" placeholder="Password" />
+      </md-input-container>
 </div>
 <div class="login-field submit-button-div">
-      <button (click)="login()">Log In</button>
+      <button md-raised-button (click)="login()">Log In</button>
 </div>
 <div *ngIf="loading">
       Logging in..

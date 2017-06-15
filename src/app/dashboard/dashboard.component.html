@@ -1,6 +1,13 @@
+<nav class="navlinks">
+  <a routerLink="/dashboard/tasks" routerLinkActive="active">Tasks</a>
+  <a routerLink="/dashboard/profile" routerLinkActive="active">My profile</a>
+  <a routerLink="/dashboard/users" routerLinkActive="active">Users</a>
+  <a routerLink="/dashboard/new_purchase" routerLinkActive="active">New Purchase</a>
+  <a routerLink="/dashboard/budget" routerLinkActive="active">Budget</a>
+  <a routerLink="/communes">Change commune</a>
+</nav>
 <p>
-  Tähän tulee navibar tai jotain vastaavaa <br />
-  Kirjautuneena: <b>{{user.name}}</b> <br />
+  Valittu kommuuni: {{commune.name}} <br /> Kirjautuneena: <b>{{user.name}}</b> <br />
   <button (click)="logOut()">Log out</button>
 </p>
 <hr />

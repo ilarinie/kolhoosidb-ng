@@ -1,16 +1,25 @@
+import { Commune } from '../models/commune';
+import { fadeIn, slideInDownAnimation } from '../animations';
 import { Router } from '@angular/router';
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ApiService} from "../services/api.service";
-import {User} from "../models/user";
+import { Component, OnDestroy, OnInit, HostBinding } from '@angular/core';
+import { ApiService } from "../services/api.service";
+import { User } from "../models/user";
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  animations: [fadeIn]
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+  @HostBinding('@routeAnimation') routeAnimation = true;
+  @HostBinding('style.display') display = 'block';
+  //@HostBinding('style.position') position = 'absolute'
+
 
   userSub: any;
+  communeSub: any;
+  commune: Commune;
   user: User = new User();
 
   constructor(private router: Router, private apiService: ApiService) { }
@@ -22,10 +31,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.user = user;
       }
     )
+    this.commune = this.apiService.selected_commune;
+    this.communeSub = this.apiService.communeSub.subscribe(
+      (commune) => {
+        this.commune = commune;
+      }
+    )
   }
 
   ngOnDestroy = () => {
     this.userSub.unsubscribe();
+    this.communeSub.unsubscribe();
   }
 
   get userDg() {
@@ -33,7 +49,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   logOut = () => {
-    localStorage.removeItem('token');
+    localStorage.clear();
     this.router.navigate(['/login']);
   }
 

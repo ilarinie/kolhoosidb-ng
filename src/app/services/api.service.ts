@@ -1,3 +1,4 @@
+import { Commune } from '../models/commune';
 import { Headers, Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Rx';
@@ -5,19 +6,35 @@ import 'rxjs/add/operator/toPromise';
 import {Subject} from 'rxjs/Subject';
 import {User} from '../models/user';
 
+
+const fakeCommune1 = new Commune("Feikkikommuuni1");
+const fakeCommune2 = new Commune("Feikkikommuuni2");
+
+// Feikkikommuuneja testausta varten
+const fakeCommunes = [
+  fakeCommune1,
+  fakeCommune2
+]
+
 @Injectable()
 export class ApiService {
 
   apiUrl = 'https://kolhoosidb-api.herokuapp.com';
   // apiUrl = 'http://localhost:3000';
   current_user: User;
+  selected_commune: Commune = null;
 
   userSub: Subject<User> = new Subject<User>();
+  communeSub: Subject<Commune> = new Subject<Commune>();
 
   constructor(private http: Http) {
     this.current_user = JSON.parse(localStorage.getItem('current_user'));
+    this.selected_commune = JSON.parse(localStorage.getItem('selected_commune'))
     if (this.current_user) {
       this.userSub.next(this.current_user);
+    }
+    if (this.selected_commune) {
+      this.communeSub.next(this.selected_commune);
     }
   }
 
@@ -35,6 +52,22 @@ export class ApiService {
     this.current_user = user;
     this.userSub.next(this.current_user);
   }
+
+  selectCommune = (commune: Commune) => {
+    this.selected_commune = commune;
+    localStorage.setItem('selected_commune', JSON.stringify(commune));
+    this.communeSub.next(this.selected_commune);
+  }
+  unSelectCommune = () => {
+    this.selected_commune = null;
+    localStorage.removeItem('selected_commune');
+    this.communeSub.next(this.selected_commune);
+  }
+
+  getCommunes = () => {
+    return Promise.resolve(fakeCommunes);
+  }
+
 
 
 
@@ -91,7 +124,6 @@ export class ApiService {
 
 
   handleError = (error: any): Promise<any> => {
-    // console.error('An error occurred', error);
     return Promise.reject(error.message || error);
   }
 
