@@ -1,10 +1,16 @@
-<p>
-  Tästä valittaisiin kommuuni
-</p>
-<div *ngFor="let commune of communes">
-  <h3>{{commune.name}}</h3>
-  <button md-raised-button (click)="selectCommune(commune)">Valitse</button>
+<div class="column-container">
+  <div class="column left">
+    <h4>Go to commune</h4>
+    <div class="single-commune" *ngFor="let commune of communes">
+      <b>{{commune.name}}</b>
+      <button md-raised-button (click)="selectCommune(commune)">Choose</button>
+      <hr />
+    </div>
+    <h4>Log out</h4>
+    <button md-raised-button (click)="logout()">Log out</button>
+  </div>
+  <div class="column right">
+    <h4>Update your profile</h4>
+    <app-profile></app-profile>
+  </div>
 </div>
-<hr />
-<h4>Log out</h4>
-<button md-raised-button (click)="logout()">Log out</button>
