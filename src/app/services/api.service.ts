@@ -5,15 +5,14 @@ import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
 import {Subject} from 'rxjs/Subject';
 import {User} from '../models/user';
-
-
-const fakeCommune1 = new Commune("Feikkikommuuni1");
-const fakeCommune2 = new Commune("Feikkikommuuni2");
+import {commune1, commune2} from './mock-data';
+import { Task } from '../models/task';
+import { TaskCompletion } from '../models/task-completion';
 
 // Feikkikommuuneja testausta varten
-const fakeCommunes = [
-  fakeCommune1,
-  fakeCommune2
+let fakeCommunes = [
+  commune1,
+  commune2
 ]
 
 @Injectable()
@@ -45,8 +44,6 @@ export class ApiService {
     return headers;
   }
 
-
-
   changeUser = (user: User) => {
     localStorage.setItem('current_user', JSON.stringify(user));
     this.current_user = user;
@@ -66,6 +63,20 @@ export class ApiService {
 
   getCommunes = () => {
     return Promise.resolve(fakeCommunes);
+  }
+
+  completeTask = (task: Task): Promise<Task> => {
+    const completion: TaskCompletion = new TaskCompletion();
+    completion.task_id = task.id;
+    completion.user_id = this.current_user.id;
+    completion.user_name = this.current_user.name;
+    completion.created_at = new Date();
+    completion.id = 9999999;
+    task.task_completions.push(completion);
+    this.communeSub.next(this.selected_commune);
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(task), 1000);
+    })
   }
 
 
@@ -105,7 +116,7 @@ export class ApiService {
   }
 
   putUser = (user: User) => {
-    let headers = this.getHeader();
+    const headers = this.getHeader();
     return this.http.put(this.apiUrl + '/users/' + user.id, user ,  { headers: headers })
       .toPromise()
       .then((response) => {

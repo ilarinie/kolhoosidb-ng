@@ -3,8 +3,8 @@ export class User {
   username: string;
   name: string;
   created_at: Date;
-  updated_at: Date;
+  updated_at?: Date;
   email: string;
-  password: string;
-  password_confirmation: string;
+  password?: string;
+  password_confirmation?: string;
 }

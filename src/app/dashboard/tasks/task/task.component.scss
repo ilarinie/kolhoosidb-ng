@@ -1,0 +1,27 @@
+.task-card {
+  border: 1px solid black;
+  //border-radius: 10px;
+  margin: 20px auto;
+  height: 170px;
+  width: 400px;
+  position: relative;
+}
+
+.task-card-header {
+  border-bottom: 1px solid black;
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.task-card-contents {
+  padding: 10px;
+}
+
+button {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 0 auto;
+  background: lightgrey;
+}

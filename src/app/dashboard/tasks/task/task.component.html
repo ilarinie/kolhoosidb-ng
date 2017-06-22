@@ -1,0 +1,12 @@
+<div class="task-card" >
+  <div class="task-card-header">
+    <b>{{task.name}}</b>
+  </div>
+  <div class="task-card-contents">
+    Last done: <b>{{last_completion.user_name}}</b> <br />
+    Should be done in<br />
+    <span [style.color]="priorityColor">{{time_to_complete}} (priority: {{task.priority}} h)</span><br/>
+    Awards <b>{{task.points}}</b> imaginary points. <br />
+  </div>
+  <button md-raised-button (click)="completeTask()">{{loading}}</button>
+</div>

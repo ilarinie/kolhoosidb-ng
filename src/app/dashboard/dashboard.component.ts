@@ -2,8 +2,8 @@ import { Commune } from '../models/commune';
 import { fadeIn, slideInDownAnimation } from '../animations';
 import { Router } from '@angular/router';
 import { Component, OnDestroy, OnInit, HostBinding } from '@angular/core';
-import { ApiService } from "../services/api.service";
-import { User } from "../models/user";
+import { ApiService } from '../services/api.service';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +14,6 @@ import { User } from "../models/user";
 export class DashboardComponent implements OnInit, OnDestroy {
   @HostBinding('@routeAnimation') routeAnimation = true;
   @HostBinding('style.display') display = 'block';
-  //@HostBinding('style.position') position = 'absolute'
 
 
   userSub: any;

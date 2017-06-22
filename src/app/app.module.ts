@@ -24,6 +24,7 @@ import { NewPurchaseComponent } from './dashboard/new-purchase/new-purchase.comp
 import { BudgetComponent } from './dashboard/budget/budget.component';
 import { UsersComponent } from './dashboard/users/users.component';
 import { CommunelistComponent } from './communelist/communelist.component';
+import { TaskComponent } from './dashboard/tasks/task/task.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { CommunelistComponent } from './communelist/communelist.component';
     NewPurchaseComponent,
     BudgetComponent,
     UsersComponent,
-    CommunelistComponent
+    CommunelistComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,

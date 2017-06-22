@@ -1,5 +1,7 @@
 import { fadeIn, slideInDownAnimation } from '../../animations';
-import { Component, OnInit, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, Input } from '@angular/core';
+import {Commune} from '../../models/commune';
+import {ApiService} from '../../services/api.service';
 
 @Component({
   selector: 'app-tasks',
@@ -11,9 +13,17 @@ export class TasksComponent implements OnInit {
   @HostBinding('@routeAnimation') routeAnimation = true;
   @HostBinding('style.display') display = 'block';
 
-  constructor() { }
+  commune: Commune;
 
-  ngOnInit() {
-  }
+  constructor(private apiService: ApiService) {
+    this.commune = apiService.selected_commune;
+    apiService.communeSub.subscribe(
+      commune => {
+        this.commune = commune;
+      }
+    )
+   }
+
+  ngOnInit() { }
 
 }

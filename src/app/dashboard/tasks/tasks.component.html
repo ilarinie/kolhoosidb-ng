@@ -1,3 +1,6 @@
-<p>
-  tasks works!
-</p>
+<h3>Tasks</h3>
+<div class="task-card-container">
+  <div class="task-container" *ngFor="let task of commune.tasks">
+    <app-task [task]="task"></app-task>
+  </div>
+</div>
