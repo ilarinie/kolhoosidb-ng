@@ -10,7 +10,7 @@ import { Task } from '../models/task';
 import { TaskCompletion } from '../models/task-completion';
 
 // Feikkikommuuneja testausta varten
-let fakeCommunes = [
+const fakeCommunes = [
   commune1,
   commune2
 ]
@@ -18,8 +18,8 @@ let fakeCommunes = [
 @Injectable()
 export class ApiService {
 
-  apiUrl = 'https://kolhoosidb-api.herokuapp.com';
-  // apiUrl = 'http://localhost:3000';
+  // apiUrl = 'https://kolhoosidb-api.herokuapp.com';
+   apiUrl = 'http://localhost:3000';
   current_user: User;
   selected_commune: Commune = null;
 

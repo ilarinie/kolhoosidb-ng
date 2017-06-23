@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   user: User = new User();
   infoForm: FormGroup;
   passwordForm: FormGroup;
+  formDisabled: boolean = false;
 
   passwordErrors: string[];
   usernameErrors: string[];
@@ -33,6 +34,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
       'password': new FormControl('', <any>[Validators.required, Validators.minLength(8), Validators.maxLength(30)]),
       'password_confirmation': new FormControl('', <any>[Validators.required, Validators.minLength(8), Validators.maxLength(30)])
     }, this.passwordMatchValidator)
+  }
+
+  handleUserUpdated(event: any) {
+    Object.assign(this.user, event as User);
+    console.log("Sent to backends");
+    console.log(this.user);
+    this.formDisabled = true;
+    this.apiService.putUser(this.user).then((response) => {
+      this.apiService.getCurrentUser();
+      this.formDisabled = false;
+    }).catch((error) => {
+      this.formDisabled = false;
+            alert(error);
+    })
   }
 
   ngOnInit() {

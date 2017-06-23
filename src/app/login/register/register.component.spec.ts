@@ -22,4 +22,9 @@ describe('RegisterComponent', () => {
   it('should be created', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should validate username', () => {
+
+
+  });
 });

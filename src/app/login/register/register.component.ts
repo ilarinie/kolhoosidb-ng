@@ -14,24 +14,16 @@ import { ApiService } from '../../services/api.service';
 export class RegisterComponent implements OnInit {
   @HostBinding('@routeAnimation') routeAnimation = true;
   @HostBinding('style.display') display = 'block';
+  @Input() user: User;
+  @Input() disabled: boolean;
+  @Output() userUpdated = new EventEmitter();
 
   form: FormGroup;
-  usernameErrors: string[] = [];
-  nameErrors: string[] = [];
-  emailErrors: string[] = [];
-  passwordErrors: string[] = [];
-
+  title: string;
 
   loading = false;
 
   constructor(private fb: FormBuilder, private apiService: ApiService) {
-    this.form = this.fb.group({
-      'username': new FormControl('', <any>[Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
-      'name': new FormControl('', <any>[Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
-      'email': new FormControl('', <any>[Validators.required]),
-      'password': new FormControl('', <any>[Validators.required, Validators.minLength(8), Validators.maxLength(30)]),
-      'password_confirmation': new FormControl('', <any>[Validators.required, Validators.minLength(8), Validators.maxLength(30)])
-    }, this.passwordMatchValidator)
   }
 
   passwordMatchValidator = (g: FormGroup) => {
@@ -40,51 +32,63 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.user) {
+      this.title = 'Update your information';
+      this.form = this.fb.group({
+        'username': new FormControl({ value: this.user.username, disabled: true }, <any>[Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
+        'name': new FormControl(this.user.name, <any>[Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
+        'email': new FormControl(this.user.email, <any>[Validators.required]),
+        'password': new FormControl('', <any>[Validators.minLength(8), Validators.maxLength(30)]),
+        'password_confirmation': new FormControl('', <any>[Validators.minLength(8), Validators.maxLength(30)])
+      }, this.passwordMatchValidator)
+    } else {
+      this.title = 'Register a new account';
+      this.form = this.fb.group({
+        'username': new FormControl('', <any>[Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
+        'name': new FormControl('', <any>[Validators.required, Validators.minLength(2), Validators.maxLength(30)]),
+        'email': new FormControl('', <any>[Validators.required]),
+        'password': new FormControl('', <any>[Validators.required, Validators.minLength(8), Validators.maxLength(30)]),
+        'password_confirmation': new FormControl('', <any>[Validators.required, Validators.minLength(8), Validators.maxLength(30)])
+      }, this.passwordMatchValidator)
+    }
+    (this.disabled) ? this.form.disable : '';
   }
 
-  createUser() {
-    this.clearErrors();
-    this.loading = true;
-    if (this.form.valid) {
-      const user: User = new User();
-      user.email = this.form.controls.email.value;
-      user.name = this.form.controls.name.value;
-      user.username = this.form.controls.username.value;
-      user.password = this.form.controls.password.value;
-      user.password_confirmation = this.form.controls.password_confirmation.value;
-      this.form.disable();
-      this.apiService.saveUser(user).then((response) => {
-        alert('Created succesfully, you can log in');
-        this.loading = false;
-        this.form.enable();
-        this.form.reset();
-      }).catch((error) => {
-        this.loading = false;
-        this.handleError(error);
-        this.form.enable();
-      });
+  formError = (control: any) => {
+    if (control.touched && control.errors) {
+      if (control.errors.required) {
+        return 'This field is required';
+      }
+      if (control.errors.minlength) {
+        return 'Minimum length is ' + control.errors.minlength.requiredLength;
+      }
+      if (control.errors.maxlength) {
+        return 'Maximum length is ' + control.errors.maxlength.requiredLength + ' characters.';
+      }
+      if (control.errors.pattern) {
+        return 'Not a valid email address :(';
+      }
+    } else {
+      return false;
     }
   }
 
-  clearErrors = () => {
-    this.usernameErrors = [];
-    this.passwordErrors = [];
-    this.emailErrors = [];
-    this.nameErrors = [];
+  passwordMatchesConfirmation = () => {
+    if (this.form.controls.password.touched && this.form.controls.password_confirmation.touched) {
+      if (this.form.controls.password.value !== this.form.controls.password_confirmation.value){
+        return 'Confirmation does not match password.';
+      }
+    }
+    return false;
   }
 
-  handleError = (errorResp) => {
-    JSON.parse(errorResp._body).errors.map((error, index) => {
-      if (error.indexOf('Username') !== -1) {
-        this.usernameErrors.push(error);
-      } else if (error.indexOf('Name') !== -1) {
-        this.nameErrors.push(error);
-      } else if (error.indexOf('Email') !== -1) {
-        this.emailErrors.push(error);
-      } else if (error.indexOf('Password') !== -1) {
-        this.passwordErrors.push(error);
-      }
-    })
+  createUser() {
+    console.log(this.form.value);
+    this.loading = true;
+    if (this.form.valid) {
+      const user: User = (this.form.value as User);
+      this.userUpdated.emit(user);
+    }
   }
 
 }
