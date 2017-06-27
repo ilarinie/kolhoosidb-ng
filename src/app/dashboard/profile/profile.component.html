@@ -16,7 +16,7 @@
   </table> -->
 </div>
 <div>
-  <app-register [disabled]="formDisabled" (userUpdated)="handleUserUpdated($event)" [user]="user"></app-register>
+  <app-user-form [disabled]="formDisabled" (userUpdated)="handleUserUpdated($event)" [user]="user"></app-user-form>
  <!-- <div  class="user-form">
     <h2>Update your info</h2>
     <form [formGroup]="infoForm" (ngSubmit)="updateUser()">

@@ -6,12 +6,12 @@ import { User } from '../../models/user';
 import { ApiService } from '../../services/api.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+  selector: 'app-user-form',
+  templateUrl: './user-form.component.html',
+  styleUrls: ['./user-form.component.scss'],
   animations: [fadeIn]
 })
-export class RegisterComponent implements OnInit {
+export class UserFormComponent implements OnInit {
   @HostBinding('@routeAnimation') routeAnimation = true;
   @HostBinding('style.display') display = 'block';
   @Input() user: User;

@@ -12,19 +12,8 @@ import {ProfileComponent} from './dashboard/profile/profile.component';
 
 
 export const routes: Routes = [
-    {path: 'login', component: LoginComponent},
-    { path: 'communes', component: CommunelistComponent, canActivate: [AuthGuard]},
-    { path: 'dashboard', component: DashboardComponent,
-    canActivate: [AuthGuard, CommuneSelectGuard], canActivateChild: [AuthGuard, CommuneSelectGuard],
-        children: [
-            { path: '', redirectTo: 'profile', pathMatch: 'full'},
-            { path: 'tasks', component: TasksComponent},
-            { path: 'profile', component: ProfileComponent },
-            { path: 'budget', component: BudgetComponent},
-            { path: 'new_purchase', component: NewPurchaseComponent},
-            { path: 'users', component: UsersComponent},
-            { path: '**', component: ProfileComponent }
-        ]
-    },
+    {path: 'login', loadChildren: './login/login.module#LoginModule'},
+    { path: 'communes', canActivate:[AuthGuard], loadChildren: './communelist/communelist.module#CommunelistModule'},
+    { path: 'dashboard', canActivate:[AuthGuard, CommuneSelectGuard], loadChildren: './dashboard/dashboard.module#DashboardModule'},
     {path: '**', redirectTo: 'dashboard', pathMatch: 'full'}
 ]
