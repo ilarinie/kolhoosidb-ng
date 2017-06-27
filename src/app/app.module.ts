@@ -13,6 +13,7 @@ import {routes} from './app.routes';
 
 // for material gesture support
 import 'hammerjs';
+import {MaterialModule} from "./material-imports";
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import 'hammerjs';
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
+    MaterialModule,
     RouterModule.forRoot(routes)
   ],
   providers: [AuthGuard, ApiService, CommuneSelectGuard],
