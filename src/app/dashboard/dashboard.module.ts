@@ -13,6 +13,8 @@ import {ProfileModule} from "./profile/profile.module";
 import {BudgetModule} from "./budget/budget.module";
 import {NewPurchaseModule} from "./new-purchase/new-purchase.module";
 import {UsersModule} from "./users/users.module";
+import { FrontpageComponent } from './frontpage/frontpage.component';
+import {FrontpageModule} from "./frontpage/frontpage.module";
 
 
 export const dashboardRoutes: Routes = [
@@ -23,7 +25,7 @@ export const dashboardRoutes: Routes = [
       { path: 'budget', component: BudgetComponent},
       { path: 'new_purchase', component: NewPurchaseComponent},
       { path: 'users', component: UsersComponent},
-      { path: '**', component: ProfileComponent }
+      { path: '**', component: FrontpageComponent }
     ]
   }
 ]
@@ -36,6 +38,7 @@ export const dashboardRoutes: Routes = [
     BudgetModule,
     NewPurchaseModule,
     UsersModule,
+    FrontpageModule,
     RouterModule.forChild(dashboardRoutes)
   ],
   declarations: [
